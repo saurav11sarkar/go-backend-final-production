@@ -1,0 +1,22 @@
+{
+  "info": {
+    "name": "Go Backend Boilerplate",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {"key": "baseUrl", "value": "http://localhost:5000/api/v1"},
+    {"key": "accessToken", "value": ""},
+    {"key": "refreshToken", "value": ""}
+  ],
+  "item": [
+    {"name": "Auth", "item": [
+      {"name": "Register", "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\n  \"fullName\": \"Saurav Sarkar\",\n  \"email\": \"saurav@example.com\",\n  \"password\": \"12345678\"\n}"}, "url": "{{baseUrl}}/auth/register"}},
+      {"name": "Login", "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\n  \"email\": \"saurav@example.com\",\n  \"password\": \"12345678\"\n}"}, "url": "{{baseUrl}}/auth/login"}},
+      {"name": "Refresh", "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"}, "url": "{{baseUrl}}/auth/refresh"}}
+    ]},
+    {"name": "Products", "item": [
+      {"name": "List", "request": {"method": "GET", "header": [{"key": "Authorization", "value": "Bearer {{accessToken}}"}], "url": "{{baseUrl}}/products?page=1&limit=10&search=phone&sortBy=name&sortOrder=asc"}},
+      {"name": "Create", "request": {"method": "POST", "header": [{"key": "Authorization", "value": "Bearer {{accessToken}}"}, {"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\n  \"name\": \"Phone\",\n  \"description\": \"Example product\",\n  \"price\": 50000,\n  \"categoryId\": \"category-uuid\",\n  \"imageUrl\": \"https://example.com/image.jpg\"\n}"}, "url": "{{baseUrl}}/products"}}
+    ]}
+  ]
+}

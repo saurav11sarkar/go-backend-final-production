@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS categories (
+ id UUID PRIMARY KEY,
+ name VARCHAR(150) NOT NULL,
+ slug VARCHAR(180) UNIQUE NOT NULL,
+ created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+ updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS idx_categories_created_at ON categories(created_at);
