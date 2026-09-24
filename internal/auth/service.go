@@ -22,13 +22,13 @@ func NewService(repo *Repository, cfg config.Config, mail *email.Service) *Servi
 }
 
 type RegisterInput struct {
-	FullName string `json:"fullName"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
+	FullName string `json:"fullName" validate:"required,min=2,max=100"`
+	Email    string `json:"email" validate:"required,email"`
+	Password string `json:"password" validate:"required,min=6,max=72"`
 }
 type LoginInput struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
+	Email    string `json:"email" validate:"required,email"`
+	Password string `json:"password" validate:"required"`
 }
 type TokenResponse struct {
 	AccessToken  string `json:"accessToken"`

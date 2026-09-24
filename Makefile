@@ -29,6 +29,9 @@ migrate-force:
 migrate-create:
 	migrate create -ext sql -dir migrations $(name)
 
+migrate-reset:
+	migrate -path migrations -database "$(DATABASE_URL)" drop -f
+
 test:
 	go test ./...
 
@@ -41,3 +44,4 @@ tidy:
 install-tools:
 	go install github.com/air-verse/air@latest
 	go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+

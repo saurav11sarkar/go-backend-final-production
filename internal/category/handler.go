@@ -11,10 +11,14 @@ type Handler struct{ s *Service }
 func NewHandler(s *Service) *Handler { return &Handler{s} }
 func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 	var in struct {
-		Name string `json:"name"`
+		Name string `json:"name" validate:"required,min=2,max=100"`
 	}
 	if json.NewDecoder(r.Body).Decode(&in) != nil {
 		utils.Error(w, 400, "invalid body")
+		return
+	}
+	if err := utils.ValidateStruct(in); err != nil {
+		utils.Error(w, 400, err.Error())
 		return
 	}
 	c, err := h.s.Create(r.Context(), in.Name)
@@ -35,10 +39,14 @@ func (h *Handler) List(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) Update(w http.ResponseWriter, r *http.Request) {
 	var in struct {
-		Name string `json:"name"`
+		Name string `json:"name" validate:"required,min=2,max=100"`
 	}
 	if json.NewDecoder(r.Body).Decode(&in) != nil {
 		utils.Error(w, 400, "invalid body")
+		return
+	}
+	if err := utils.ValidateStruct(in); err != nil {
+		utils.Error(w, 400, err.Error())
 		return
 	}
 	c, err := h.s.Update(r.Context(), r.PathValue("id"), in.Name)

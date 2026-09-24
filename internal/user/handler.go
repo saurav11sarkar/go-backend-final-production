@@ -30,10 +30,14 @@ func (h *Handler) List(w http.ResponseWriter, r *http.Request) {
 }
 func (h *Handler) UpdateProfile(w http.ResponseWriter, r *http.Request) {
 	var in struct {
-		FullName string `json:"fullName"`
+		FullName string `json:"fullName" validate:"required,min=2,max=100"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&in); err != nil {
 		utils.Error(w, 400, "invalid body")
+		return
+	}
+	if err := utils.ValidateStruct(in); err != nil {
+		utils.Error(w, 400, err.Error())
 		return
 	}
 	id, _ := middleware.CurrentUser(r)

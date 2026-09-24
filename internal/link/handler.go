@@ -11,11 +11,15 @@ type Handler struct{ s *Service }
 func NewHandler(s *Service) *Handler { return &Handler{s} }
 func (h *Handler) Create(w http.ResponseWriter, r *http.Request) {
 	var in struct {
-		Title string `json:"title"`
-		URL   string `json:"url"`
+		Title string `json:"title" validate:"required,min=2,max=150"`
+		URL   string `json:"url" validate:"required,url"`
 	}
 	if json.NewDecoder(r.Body).Decode(&in) != nil {
 		utils.Error(w, 400, "invalid body")
+		return
+	}
+	if err := utils.ValidateStruct(in); err != nil {
+		utils.Error(w, 400, err.Error())
 		return
 	}
 	l, err := h.s.Create(r.Context(), in.Title, in.URL)

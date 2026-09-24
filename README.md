@@ -106,6 +106,11 @@ For a new feature, repeat the same five-file module pattern. Example: `booking/m
 - Forgot password / reset password
 - bcrypt password hashing
 
+### Validation
+- Request validation with `github.com/go-playground/validator/v10`
+- Struct tags for required fields, email, length, numeric codes, URLs and numeric ranges
+- Consistent `400` validation error responses from handlers
+
 ### API features
 - CRUD pattern
 - Search
