@@ -17,7 +17,7 @@ func (s *Service) List(ctx context.Context, q utils.Query) ([]User, int, error) 
 func (s *Service) UpdateProfile(ctx context.Context, id, name string) (User, error) {
 	name = strings.TrimSpace(name)
 	if name == "" {
-		return User{}, errors.New("fullName is required")
+		return User{}, errors.New("fullName is requireds")
 	}
 	if err := s.repo.UpdateProfile(ctx, id, name); err != nil {
 		return User{}, err
